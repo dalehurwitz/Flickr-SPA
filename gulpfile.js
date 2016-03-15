@@ -2,7 +2,7 @@ var gulp = require("gulp");
 var browserify = require("browserify");
 var babelify = require("babelify");
 var source = require("vinyl-source-stream");
-var browserSync = require("browser-sync");
+var browserSync = require("browser-sync").create();
 
 var config = {
 	paths: {
@@ -18,19 +18,18 @@ gulp.task("build", function () {
         .bundle()
 		.on("error", console.error.bind(console))
         .pipe(source("bundle.js"))
-        .pipe(gulp.dest(config.paths.dist + "/js"));
+        .pipe(gulp.dest(config.paths.dist + "/js"))
+		.pipe(browserSync.stream());
 });
 
 gulp.task("browserSync", function () {
-	browserSync({
+	browserSync.init({
 		server: {
-			baseDir: "./dist"
+			baseDir: config.paths.dist
 		}
 	})
 });
 
-gulp.task("watch", ["build"], browserSync.reload);
-
 gulp.task("default", ["browserSync"], function() {
-	 gulp.watch(config.paths.js, ["watch"]);
+	 gulp.watch(config.paths.js, ["build"]);
 });
