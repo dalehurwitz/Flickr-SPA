@@ -7,7 +7,7 @@ var browserSync = require("browser-sync");
 var config = {
 	paths: {
 		js: "./src/**/*.js",
-		mainJs: "./src/app.js",
+		mainJs: "./src/main.js",
 		dist: "./dist"
 	}
 }
