@@ -7,8 +7,8 @@ import Photo from "./photo";
 class PhotoFeed extends React.Component {
 
 	generatePhotos() {
-		return [1, 2, 3, 4, 5].map(function() {
-			return <Photo />;
+		return [1, 2, 3, 4, 5].map(function(key) {
+			return <Photo key={key} />;
 		});
 	}
 
