@@ -2,11 +2,13 @@
 
 import React from "react";
 
+import flickrApi from "../../api/flickrApi";
+
 class Photo extends React.Component {
 	render() {
 		return (
-			<div style={{float:'left', width:'50px', height:'50px', backgroundColor:"yellow"}}>
-				This is a photo
+			<div className="feed__photo">
+				<img src={flickrApi.constructImgUrl(this.props.photoData)} alt=""/>
 			</div>
 		)
 	}

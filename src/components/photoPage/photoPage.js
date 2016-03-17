@@ -8,8 +8,7 @@ class PhotoPage extends React.Component {
 	render() {
 		return (
 			<div>
-				This is the photo page
-				<PhotoFeed />
+				<PhotoFeed defaultTag={"coffee"} />
 			</div>
 		)
 	}

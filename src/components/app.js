@@ -9,7 +9,6 @@ class App extends React.Component {
 		return (
 			<div>
 				<Header />
-				<div>This is the photo app</div>
 				{this.props.children}
 			</div>
 		)

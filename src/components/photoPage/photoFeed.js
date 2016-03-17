@@ -3,19 +3,38 @@
 import React from "react";
 
 import Photo from "./photo";
+import flickrApi from "../../api/flickrApi";
 
 class PhotoFeed extends React.Component {
 
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			photos: []
+		}
+
+		this.generatePhotos = this.generatePhotos.bind(this);
+	}
+
 	generatePhotos() {
-		return [1, 2, 3, 4, 5].map(function(key) {
-			return <Photo key={key} />;
+		return this.state.photos.map(function(data, val) {
+			return <Photo key={val} photoData={data} />;
 		});
+	}
+
+	componentWillMount() {
+		var tag = this.props.defaultTag;
+		var self = this;
+		flickrApi.getPhotosByTag(tag).then(function(data) {
+			self.setState({ photos: data.response.photos.photo });
+		});
+
 	}
 
 	render() {
 		return (
-			<div>
-				This is the photo Feed
+			<div className="feed">
 				{this.generatePhotos()}
 			</div>
 		)
