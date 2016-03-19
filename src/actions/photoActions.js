@@ -1,13 +1,19 @@
 import alt from "../alt";
+import flickrApi from "../api/flickrApi";
 
 class PhotoActions {
 	getPhotosByTag(tags) {
-		let dispatcher = this;
-		let arr = ["a", "e", "i", "o", "u"];
-		setTimeout(function() {
-			dispatcher.dispatch(arr);
-		}, 3000);
+		var arr = ["a", "e", "i", "o", "u"];
+        var self = this;
+        return (dispatch) => {
+            dispatch();
+            flickrApi.getPhotosByTag(tags).then(this.updatePhotos);
+        }
 	}
+    
+    updatePhotos(data) {
+        return data.response.photos.photo;
+    }
 }
 
-export alt.createActions(PhotoActions);
+export default alt.createActions(PhotoActions);

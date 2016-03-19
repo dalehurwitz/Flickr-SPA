@@ -14,28 +14,24 @@ class PhotoFeed extends React.Component {
 			photos: []
 		}
 
-		this.generatePhotos = this.generatePhotos.bind(this);
+		this._generatePhotos = this._generatePhotos.bind(this);
 	}
 
-	generatePhotos() {
-		return this.state.photos.map(function(data, val) {
-			return <Photo key={val} photoData={data} />;
+	_generatePhotos() {
+		return this.props.photos.map(function(data, val) {
+			return <Photo key={data.id} photoData={data} />;
 		});
 	}
 
 	componentWillMount() {
 		var tag = this.props.defaultTag;
 		var self = this;
-		flickrApi.getPhotosByTag(tag).then(function(data) {
-			self.setState({ photos: data.response.photos.photo });
-		});
-
 	}
 
 	render() {
 		return (
 			<div className="feed">
-				{this.generatePhotos()}
+				{this._generatePhotos()}
 			</div>
 		)
 	}

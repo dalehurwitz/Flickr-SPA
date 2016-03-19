@@ -8,8 +8,11 @@ var del = require("del");
 var uglify = require("gulp-uglify");
 var gulpIf = require("gulp-if");
 var less = require("gulp-less");
+var history = require('connect-history-api-fallback');
+
 
 var config = {
+    port: 3000,
 	paths: {
 		js: "./src/**/*.js",
 		mainJs: "./src/main.js",
@@ -44,9 +47,12 @@ gulp.task("less", function() {
 gulp.task("build:prod", ["set-env:prod", "clean", "build", "set-env:dev"]);
 
 gulp.task("browserSync", function () {
+        
 	browserSync.init({
+        port: config.port,
 		server: {
-			baseDir: config.paths.dist
+			baseDir: config.paths.dist,
+            middleware: [history()]
 		}
 	})
 });

@@ -1,4 +1,4 @@
 const Alt = require("alt");
 const alt = new Alt();
 
-export alt;
+export default alt;
