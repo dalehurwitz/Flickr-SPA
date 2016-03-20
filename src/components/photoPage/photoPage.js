@@ -6,6 +6,7 @@ import PhotoFeed from "./photoFeed";
 import PhotoStore from "../../stores/photoStore";
 import PhotoActions from "../../actions/photoActions";
 import { hashHistory } from "react-router";
+import Waypoint from "react-waypoint";
 
 class PhotoPage extends React.Component {
     
@@ -15,7 +16,6 @@ class PhotoPage extends React.Component {
         this._onRouteChange = this._onRouteChange.bind(this);
         this.onSearch = this.onSearch.bind(this);
         this.state = PhotoStore.getState();
-        this.state.currentTag = this.state.defaultPhotoTag;
     }
     
     componentWillMount() {
@@ -27,16 +27,22 @@ class PhotoPage extends React.Component {
     }
     
     componentDidMount() {
-        var tag = this.props.params.tag || this.state.defaultPhotoTag;
-        PhotoActions.getPhotosByTag(tag);
+        var tags = this.props.params.tags || this.state.defaultPhotoTags;
+        PhotoActions.getPhotosByTags(tags);
         this.context.router.setRouteLeaveHook(this.props.route, this._onRouteChange);
     }
     
+    _loadMorePhotos() {
+        if(this.state.currentResultsPage < this.state.numResultsPages) {
+            PhotoActions.getPhotosByTags(this.state.currentPhotoTags, this.state.currentResultsPage+1);
+        }
+    }
+    
     _onRouteChange(route) {
-        var tag = route.pathname.replace("/","");
-        if(tag === "") tag = this.state.defaultPhotoTag;
-        this.setState({ currentTag: tag });
-        PhotoActions.getPhotosByTag(tag);
+        var tags = route.pathname.replace("/","");
+        if(tags === "") tags = this.state.defaultPhotoTags;
+        this.setState({ currentPhotoTags: tags });
+        PhotoActions.getPhotosByTags(tags);
     }
     
     _onChange() {
@@ -45,28 +51,39 @@ class PhotoPage extends React.Component {
     
     onSearch(searchTerm) {
         if(searchTerm) {
-            PhotoActions.getPhotosByTag(searchTerm);
+            PhotoActions.getPhotosByTags(searchTerm);
             this.context.router.push({
                 pathname: searchTerm
             });
         }
     }
     
-	render() {
-        
-        var loading = null;
-        
+    _renderLoader() {
         if(this.state.loadingPhotos) {
-            loading = (
+            return (
                 <div>Loading...</div>
-            ) 
+            )
         };
-        
+    }
+    
+    _renderWaypoint() {
+        if(!this.state.loadingPhotos) {
+            return (
+                <Waypoint
+                    onEnter={this._loadMorePhotos.bind(this)}
+                    threshold={2.0} 
+                />
+            )
+        }
+    }
+    
+	render() {
 		return (
 			<div>
-                {loading}
+                {this._renderLoader()}
                 <Search onClick={this.onSearch} />
 				<PhotoFeed photos={this.state.photos} />
+                {this._renderWaypoint()}
 			</div>
 		)
 	}

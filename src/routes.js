@@ -9,7 +9,7 @@ import PhotoPage from "./components/photoPage/photoPage";
 
 const Routes = (
     <Router history={browserHistory}>
-        <Route name="app" path="/(:tag)" component={App}>
+        <Route name="app" path="/(:tags)" component={App}>
             <IndexRoute component={PhotoPage} />
         </Route>
     </Router>

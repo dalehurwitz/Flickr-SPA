@@ -5,8 +5,10 @@ import React from "react";
 class Header extends React.Component {
 	render() {
 		return (
-			<header>
-				<h1>Photo App</h1>
+			<header className="main-header fixed-top">
+				<div className="container">
+				    <h1>Photo App</h1>
+				</div>
 			</header>
 		)
 	}

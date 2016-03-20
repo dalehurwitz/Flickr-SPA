@@ -4,6 +4,7 @@ import React from "react";
 
 import Photo from "./photo";
 import flickrApi from "../../api/flickrApi";
+import Masonry from "react-masonry-component";
 
 class PhotoFeed extends React.Component {
 
@@ -13,25 +14,35 @@ class PhotoFeed extends React.Component {
 		this.state = {
 			photos: []
 		}
-
+    
 		this._generatePhotos = this._generatePhotos.bind(this);
 	}
 
 	_generatePhotos() {
-		return this.props.photos.map(function(data, val) {
-			return <Photo key={data.id} photoData={data} />;
+		return this.props.photos.map(function(data, index) {
+			return <Photo key={index} photoData={data} />;
 		});
 	}
 
 	componentWillMount() {
-		var tag = this.props.defaultTag;
+		var tags = this.props.defaultTags;
 		var self = this;
 	}
 
 	render() {
+        
+        var masonryOptions = {
+            transitionDuration: 0
+        };
+        
 		return (
 			<div className="feed">
-				{this._generatePhotos()}
+                <Masonry
+                    options={masonryOptions} // default {}
+                    disableImagesLoaded={false} // default false
+                >
+                    {this._generatePhotos()}
+                </Masonry>
 			</div>
 		)
 	}

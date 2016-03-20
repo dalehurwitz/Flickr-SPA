@@ -1,21 +1,20 @@
 .feed {
-	@column-count: 4;
-	overflow: auto;
-	-webkit-column-count: @column-count;
-    -moz-column-count: @column-count;
-    column-count: @column-count;
-    -webkit-column-gap: 0;
-    -moz-column-gap: 0;
-    column-gap: 0;
-	font-size: 0;
-    padding: 5px;
+	padding: 5px;
 
-	&__photo {
+	&__item {
 		padding: 5px;
 		box-sizing: border-box;
-		-webkit-column-break-inside: avoid;
-		page-break-inside: avoid;
-		break-inside: avoid;
+        float: left;
+        width: 50%;
+        @media @tablet {
+            width: 33.3333333%;
+        }
+        @media @desktop {
+            width: 25%;
+        }
+        > * {
+            box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.5);
+        }
 		img {
 			width: 100%;
 			height: auto;

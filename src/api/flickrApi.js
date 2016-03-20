@@ -23,15 +23,10 @@ const defaultParams = {
 const flickrApi = {
 	baseUrl: "https://api.flickr.com/services/rest/",
 	
-	searchPhotos(params) {
+	getPhotos(params) {
 		params = params || {};
 		params = extend(params, defaultParams);
 		return qwest.get(this.baseUrl, params);
-	},
-	
-	getPhotosByTag(tags) {
-		var tags = { tags: tags };
-		return this.searchPhotos(tags);
 	},
 
 	constructImgUrl(photo, size) {

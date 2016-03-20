@@ -2,18 +2,20 @@ import alt from "../alt";
 import flickrApi from "../api/flickrApi";
 
 class PhotoActions {
-	getPhotosByTag(tags) {
-		var arr = ["a", "e", "i", "o", "u"];
-        var self = this;
-        return (dispatch) => {
-            dispatch();
-            flickrApi.getPhotosByTag(tags).then(this.updatePhotos);
-        }
+	getPhotos(params, page) {
+        if(page) params.page = page;
+        flickrApi.getPhotos(params).then(this.updatePhotos.bind(this));
+        return false;
 	}
     
-    updatePhotos(data) {
-        return data.response.photos.photo;
+    getPhotosByTags(tags, page) {
+        this.getPhotos({ tags: tags }, page);
+        return tags;
     }
+    
+    updatePhotos(data) {
+        return data.response.photos;
+    }    
 }
 
 export default alt.createActions(PhotoActions);
