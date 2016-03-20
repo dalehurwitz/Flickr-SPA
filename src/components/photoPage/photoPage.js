@@ -81,7 +81,7 @@ class PhotoPage extends React.Component {
             return (
                 <Waypoint
                     onEnter={this._loadMorePhotos.bind(this)}
-                    threshold={2.0} 
+                    threshold={2} 
                 />
             )
         }
@@ -90,12 +90,11 @@ class PhotoPage extends React.Component {
 	render() {
 		return (
 			<div>
-                {this._renderLoader()}
                 <Search onClick={this.onSearch} placeholder={this.state.placeholder} />
                 <h1 className="feed__feed-header">{"'" + this.state.currentPhotoTags + "'"}</h1>
 				<PhotoFeed photos={this.state.photos} />
+                {this._renderLoader()}
                 {this._renderWaypoint()}
-                
 			</div>
 		)
 	}

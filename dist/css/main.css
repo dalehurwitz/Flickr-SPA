@@ -49,10 +49,6 @@ body.bold {
   transform: translateX(-50%);
   padding-left: 60px;
 }
-/** structure **/
-.container {
-  padding: 0 15px;
-}
 /** Helpers **/
 .img-responsive {
   width: 100%;
