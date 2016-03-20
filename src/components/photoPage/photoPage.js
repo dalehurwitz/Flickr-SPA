@@ -43,7 +43,7 @@ class PhotoPage extends React.Component {
     }
     
     _onRouteChange(route) {
-        var tags = route.pathname.replace("/","");
+        var tags = decodeURIComponent(route.pathname.replace("/",""));
         if(tags === "") tags = this.state.defaultPhotoTags;
         this.setState({ 
             loadingNewPhotoSet: true,
