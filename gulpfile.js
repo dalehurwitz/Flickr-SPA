@@ -29,12 +29,12 @@ gulp.task("build", function () {
     browserify({ entries: config.paths.mainJs, debug: true })
         .transform("babelify", {presets: ["es2015", "react"]})
         .bundle()
-		.on("error", console.error.bind(console))
         .pipe(source("bundle.js"))
 		.pipe(gulpIf(isProd, buffer()))
 		.pipe(gulpIf(isProd, uglify()))
         .pipe(gulp.dest(config.paths.dist + "/js"))
-		.pipe(browserSync.stream());
+		.pipe(browserSync.stream())
+        .on("error", console.error.bind(console));
 });
 
 gulp.task("less", function() {
