@@ -28,10 +28,12 @@ class Search extends React.Component {
     
 	render() {
 		return (
-			<form className="search-form search-form--inline fixed-top">
-                <input type="text" placeholder={this.props.placeholder} ref="textInput" onChange={this._onChange} value={this.state.searchTerm} />
-                <button type="submit" onClick={this._submitHandler} >Search</button>
-            </form>
+			<div className="search-form-container fixed-top">
+				<form className="search-form search-form--inline">
+					<input type="text" placeholder={this.props.placeholder} ref="textInput" onChange={this._onChange} value={this.state.searchTerm} />
+					<button type="submit" onClick={this._submitHandler} >Search</button>
+				</form>
+			</div>
 		)
 	}
 }

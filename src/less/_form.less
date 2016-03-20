@@ -1,6 +1,19 @@
+.search-form-container {
+	width: 100%;
+	top: 8px;
+	left: 0;	
+	text-align: center;
+}
+
 .search-form {
     @height: 40px;
-    top: 8px;
+	display: inline-block;
+	position: absolute;
+	z-index: 1000;
+    left:50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    padding-left: 10px;
     input, button {
         height: @height;
         border: 1px solid grey;
@@ -13,4 +26,7 @@
         padding: 0 10px;
         font-size: 1em;
     }
+	button {
+		position: absolute;
+	}
 }

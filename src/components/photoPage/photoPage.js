@@ -36,6 +36,7 @@ class PhotoPage extends React.Component {
     }
     
     _loadMorePhotos() {
+		if(this.state.loadingPhotos) return;
         if(this.state.currentResultsPage < this.state.numResultsPages) {
             this.setState({ loadingNewPhotoSet: false });
             PhotoActions.getPhotosByTags(this.state.currentPhotoTags, this.state.currentResultsPage+1);
@@ -77,14 +78,12 @@ class PhotoPage extends React.Component {
     }
     
     _renderWaypoint() {
-        if(!this.state.loadingPhotos) {
-            return (
-                <Waypoint
-                    onEnter={this._loadMorePhotos.bind(this)}
-                    threshold={2} 
-                />
-            )
-        }
+		return (
+			<Waypoint
+				onEnter={this._loadMorePhotos.bind(this)}
+				threshold={0.5} 
+			/>
+		)
     }
     
 	render() {
@@ -93,8 +92,8 @@ class PhotoPage extends React.Component {
                 <Search onClick={this.onSearch} placeholder={this.state.placeholder} />
                 <h1 className="feed__feed-header">{"'" + this.state.currentPhotoTags + "'"}</h1>
 				<PhotoFeed photos={this.state.photos} />
+				{this._renderWaypoint()}
                 {this._renderLoader()}
-                {this._renderWaypoint()}
 			</div>
 		)
 	}
