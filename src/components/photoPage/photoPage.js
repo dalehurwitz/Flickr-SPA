@@ -7,6 +7,7 @@ import PhotoStore from "../../stores/photoStore";
 import PhotoActions from "../../actions/photoActions";
 import { hashHistory } from "react-router";
 import Waypoint from "react-waypoint";
+import Loader from "../common/loader";
 
 class PhotoPage extends React.Component {
     
@@ -16,6 +17,8 @@ class PhotoPage extends React.Component {
         this._onRouteChange = this._onRouteChange.bind(this);
         this.onSearch = this.onSearch.bind(this);
         this.state = PhotoStore.getState();
+        this.state.loadingNewPhotoSet = true;
+        this.state.placeholder = "Enter a tag...";
     }
     
     componentWillMount() {
@@ -34,6 +37,7 @@ class PhotoPage extends React.Component {
     
     _loadMorePhotos() {
         if(this.state.currentResultsPage < this.state.numResultsPages) {
+            this.setState({ loadingNewPhotoSet: false });
             PhotoActions.getPhotosByTags(this.state.currentPhotoTags, this.state.currentResultsPage+1);
         }
     }
@@ -41,7 +45,10 @@ class PhotoPage extends React.Component {
     _onRouteChange(route) {
         var tags = route.pathname.replace("/","");
         if(tags === "") tags = this.state.defaultPhotoTags;
-        this.setState({ currentPhotoTags: tags });
+        this.setState({ 
+            loadingNewPhotoSet: true,
+            placeholder: tags
+        });
         PhotoActions.getPhotosByTags(tags);
     }
     
@@ -59,9 +66,12 @@ class PhotoPage extends React.Component {
     }
     
     _renderLoader() {
-        if(this.state.loadingPhotos) {
+        if(this.state.loadingNewPhotoSet) {
+            window.scrollTo(0,0);
+        }
+        if(this.state.loadingPhotos && this.state.loadingNewPhotoSet) {
             return (
-                <div>Loading...</div>
+                <Loader message="Loading photos..." />
             )
         };
     }
@@ -81,9 +91,11 @@ class PhotoPage extends React.Component {
 		return (
 			<div>
                 {this._renderLoader()}
-                <Search onClick={this.onSearch} />
+                <Search onClick={this.onSearch} placeholder={this.state.placeholder} />
+                <h1 className="feed__feed-header">{"'" + this.state.currentPhotoTags + "'"}</h1>
 				<PhotoFeed photos={this.state.photos} />
                 {this._renderWaypoint()}
+                
 			</div>
 		)
 	}

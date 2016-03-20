@@ -1,3 +1,11 @@
+.roboto {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+.roboto.bold {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+}
 html,
 body {
   height: 100%;
@@ -7,6 +15,13 @@ body {
   margin: 0;
   padding: 0;
   background: #e9e9e9;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+}
+body.bold {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
 }
 #app {
   padding-top: 60px;
@@ -18,7 +33,6 @@ body {
   box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.25);
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#47a0e5+0,476d99+100 */
   background: #47a0e5;
-  /* Old browsers */
   background: -moz-linear-gradient(top, #47a0e5 0%, #476d99 100%);
   /* FF3.6-15 */
   background: -webkit-linear-gradient(top, #47a0e5 0%, #476d99 100%);
@@ -30,7 +44,10 @@ body {
 }
 .search-form {
   z-index: 1000;
-  right: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  padding-left: 60px;
 }
 /** structure **/
 .container {
@@ -48,6 +65,10 @@ body {
 }
 .feed {
   padding: 5px;
+}
+.feed__feed-header {
+  text-align: center;
+  padding: 10px 0;
 }
 .feed__item {
   padding: 5px;
@@ -71,4 +92,36 @@ body {
 .feed__item img {
   width: 100%;
   height: auto;
+}
+.loader {
+  position: fixed;
+  top: 0;
+  z-index: 990;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}
+.loader__message {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  text-align: center;
+}
+.search-form {
+  top: 8px;
+}
+.search-form input,
+.search-form button {
+  height: 40px;
+  border: 1px solid grey;
+  border-radius: 4px;
+  box-sizing: border-box;
+  vertical-align: top;
+  margin: 0 10px 0 0;
+}
+.search-form input {
+  padding: 0 10px;
+  font-size: 1em;
 }
